@@ -1,0 +1,9 @@
+﻿
+body,html,a,img,div,form,select,input,ul,ol,ul,li,h1,h2,h3,h4,h5,h6,dd,dl,dt,p,label,em,span{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+body{font-family:"Microsoft YaHei","Segoe UI","Lucida Grande",Helvetica,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+.main{max-width:1200px;min-width:1024px;_width:1024px;margin:0 auto}
+.main{width:747px;height:333px;position:relative;margin:0 auto;background:url(../images/404.png) center no-repeat}
+.return{border:1px solid rgb(184,184,184);position:absolute;top:178px;left:447px;padding:10px 30px;width:296px;height:90px;-webkit-border-radius:5px;-moz-border-radius:5px;-ms-border-radius:5px;-o-border-radius:5px;border-radius:5px}
+.return p{font-size:18px;color:#E23C27;margin-top:7px;text-align:center}
+.return a{display:block;text-align:center;font-size:16px;background:#E23C27;color:#FFF;line-height:35px;margin-top:15px}
