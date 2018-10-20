@@ -30,7 +30,7 @@
 </div>
 </div>
 
- <script type="text/javascript">
+
         $(function(){
     $(".pay_item").click(function(){
         $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
@@ -39,6 +39,7 @@
         $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
     });
 });
+     <script type="text/javascript">
 function dashangToggle(){
     $(".hide_box").fadeToggle();
     $(".shang_box").fadeToggle();
