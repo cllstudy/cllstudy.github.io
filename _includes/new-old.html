@@ -1,5 +1,5 @@
 <section>
-
+ <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js"></script>
   <style type="text/css">
        .content{width:80%;margin:10px auto;}
 .hide_box{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
@@ -34,9 +34,7 @@
     	  <div class="shang_payimg">
                     <img src="/images/payimg/alipayimg.png" alt="扫码支持" title="扫一扫" />
                 </div>
-              <div class="shang_payimg">    
-                    <img src="/images/payimg/weipayimg.png" alt="扫码支持" title="扫一扫" />
-                </div>
+            
     		<div class="pay_explain">扫码打赏，你说多少就多少</div>
     	<div class="shang_payselect">
     		<div class="pay_item checked" data-id="alipay">
@@ -57,9 +55,10 @@
     <script type="text/javascript">
     $(function(){
     	$(".pay_item").click(function(){
-    		$(this).addClass('checked').siblings('.pay_item').removeClass('checked');
-    		
-    		$("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+    		 $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+    		 var dataid=$(this).attr('data-id');
+                 $(".shang_payimg img").attr("src","/images/payimg/"+dataid+"img.png");
+    		 $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
     	});
     });
     function dashangToggle(){
