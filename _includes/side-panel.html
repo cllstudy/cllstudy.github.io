@@ -52,7 +52,11 @@
          <br/>
           <br/>
           <!-- 时间 -->
-         <span id="lunar_time">Lunar.fromDate(new Date()).toFullString()</span>
+        <script>
+              var date = Lunar.fromDate(new Date());
+           console.log(Lunar.fromDate(new Date()).toFullString());
+            <span id="lunar_date">date</span>
+ </script>
         </div>
       </div>
     </div>
