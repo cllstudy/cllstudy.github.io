@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON格式化工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .tool-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-section, .output-section {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            resize: vertical;
+            font-family: monospace;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        #output {
+            white-space: pre-wrap;
+            padding: 15px;
+            border-radius: 6px;
+            background: #f8f9fa;
+            font-family: monospace;
+            font-size: 14px;
+            min-height: 300px;
+        }
+
+        .json-key {
+            color: #d32f2f;
+        }
+
+        .json-string {
+            color: #689f38;
+        }
+
+        .json-number {
+            color: #1976d2;
+        }
+
+        .json-boolean {
+            color: #ab47bc;
+        }
+
+        .json-null {
+            color: #666;
+        }
+
+        .error {
+            color: #e53935;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .copy-btn {
+            background: #4CAF50;
+        }
+
+        .copy-btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JSON格式化工具</h1>
+            <p>输入JSON数据，自动格式化和高亮显示</p >
+        </div>
+
+        <div class="tool-container">
+            <div class="input-section">
+                <h2>输入JSON</h2>
+                <textarea id="input" placeholder="在此处粘贴JSON内容..."></textarea>
+                <div class="toolbar">
+                    <button onclick="formatJSON()">格式化</button>
+                    <button class="copy-btn" onclick="copyToClipboard()">复制结果</button>
+                </div>
+                <div id="error" class="error"></div>
+            </div>
+
+            <div class="output-section">
+                <h2>格式化结果</h2>
+                <div id="output"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatJSON() {
+            const input = document.getElementById('input').value;
+            const output = document.getElementById('output');
+            const error = document.getElementById('error');
+            
+            try {
+                const parsed = JSON.parse(input);
+                const formatted = JSON.stringify(parsed, null, 4);
+                output.innerHTML = syntaxHighlight(formatted);
+                error.textContent = '';
+            } catch (e) {
+                error.textContent = '错误：无效的JSON格式 - ' + e.message;
+                output.textContent = '';
+            }
+        }
+
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, 
+                match => {
+                    let cls = 'json-number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'json-key';
+                        } else {
+                            cls = 'json-string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'json-boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'json-null';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                });
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            const textarea = document.createElement('textarea');
+            textarea.value = output.textContent;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('已复制到剪贴板！');
+        }
+    </script>
+</body>
+</html>
